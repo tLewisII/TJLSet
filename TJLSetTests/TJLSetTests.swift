@@ -22,10 +22,10 @@ class TJLSetTests: XCTestCase {
     
     func testInit() {
         let set = Set(array:[1,2,3,4,4,4,5,5,5])
-        XCTAssert(set.count() == 5, "Should be 5 items")
+        XCTAssert(set.count == 5, "Should be 5 items")
         
         let newSet = Set(items: 1,2,3,4,4,4,5,5,5)
-        XCTAssert(set.count() == 5, "Should be 5 items")
+        XCTAssert(set.count == 5, "Should be 5 items")
     }
     
     func testEquality() {
@@ -43,7 +43,7 @@ class TJLSetTests: XCTestCase {
         for x in set {
             iterations++
         }
-        XCTAssert(iterations == set.count(), "should be equal")
+        XCTAssert(iterations == set.count, "should be equal")
     }
     
     func testAny() {
@@ -52,6 +52,14 @@ class TJLSetTests: XCTestCase {
             var any = set.any()
             XCTAssert(any >= 1 && any <= 5, "should always be in range")
         }
+    }
+    
+    func testAppend() {
+        let set = Set(array: [1,2,3,4,5,5,4,4,5,5])
+        let otherSet = Set(items: 6,7,8,9,10,10,1000,5600)
         
+        let newSet = set.append(otherSet)
+        XCTAssert(newSet == Set(items: 1000, 5600, 6,7,8,9,10,1,2,3,4,5), "Should be equal")
+
     }
 }

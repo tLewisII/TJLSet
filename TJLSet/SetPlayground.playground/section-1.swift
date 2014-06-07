@@ -5,6 +5,16 @@ import Cocoa
 struct Set<A: Hashable> : Sequence {
     var bucket:Dictionary<A, Bool> = Dictionary()
     
+    var array:Array<A> {
+    get {
+        var ar = Array<A>()
+        for (key, _) in bucket {
+            ar += key
+        }
+        return ar
+    }
+    }
+    
     init(items:A...) {
         self.init(array:items)
     }
@@ -15,16 +25,8 @@ struct Set<A: Hashable> : Sequence {
         }
     }
     
-    func array() -> Array<A> {
-        var ar = Array<A>()
-        for (key, _) in bucket {
-            ar += key
-        }
-        return ar
-    }
-    
     func any() -> A {
-        let ar = self.array()
+        let ar = self.array
         let index = Int(arc4random_uniform(UInt32(ar.count)))
         return ar[index]
     }
@@ -41,8 +43,14 @@ struct Set<A: Hashable> : Sequence {
         return bucket.count
     }
     
+    func append(set:Set<A>) -> Set<A> {
+        var current = self.array
+        current += set.array
+        return Set(array: current)
+    }
+    
     func generate() -> SetGenerator<A>  {
-        let items = self.array()
+        let items = self.array
         return SetGenerator(items: items[0..items.count])
     }
 }
@@ -68,4 +76,14 @@ func !=<A: Equatable, B: Equatable>(lhs:Set<A>, rhs:Set<B>) -> Bool {
 }
 
 let set = Set(array: [1,2,3,4,5,5,4,4,5,5])
-set.array()
+let otherSet = Set(items: 6,7,8,9,10,10,1000,5600)
+set.array
+
+set.any()
+
+for x in set {
+    x
+}
+
+let newSet = set.append(otherSet)
+newSet.array
