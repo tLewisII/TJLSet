@@ -60,6 +60,26 @@ class TJLSetTests: XCTestCase {
         
         let newSet = set.append(otherSet)
         XCTAssert(newSet == Set(items: 1000, 5600, 6,7,8,9,10,1,2,3,4,5), "Should be equal")
-
+        
+    }
+    
+    func testFilterMap() {
+        let set = Set(array: [1,2,3,4,5,5,4,4,5,5])
+        let newSet = set.filter{$0 > 2}.map{$0 + 1}
+        XCTAssert(newSet == Set(array: [4,5,6]), "Should be equal")
+    }
+    
+    func testIntersect() {
+        let set = Set(array: [1,2,3,4,5,5,4,4,5,5])
+        XCTAssert(set.interectsSet(Set(items: 9,0,5)), "Should be true")
+    }
+    
+    func testMember() {
+        let set = Set(array: [1,2,3,4,5,5,4,4,5,5])
+        let known = set.member(4)
+        let unknown = set.member(45765)
+        
+        XCTAssert(known == Optional.Some(4), "Should be equal")
+        XCTAssert(unknown == nil, "Should be nil")
     }
 }

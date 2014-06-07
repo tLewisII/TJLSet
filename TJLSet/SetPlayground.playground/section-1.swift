@@ -7,11 +7,11 @@ struct Set<A: Hashable> : Sequence {
     
     var array:Array<A> {
     get {
-        var ar = Array<A>()
+        var arr = Array<A>()
         for (key, _) in bucket {
-            ar += key
+            arr += key
         }
-        return ar
+        return arr
     }
     }
     
@@ -45,6 +45,22 @@ struct Set<A: Hashable> : Sequence {
         }
     }
     
+    func member(item:A) -> A? {
+        if self.contains(item) {
+            return Optional.Some(item)
+        } else {
+            return nil
+        }
+    }
+    
+    func interectsSet(set:Set<A>) -> Bool {
+        for x in set {
+            if self.contains(x) {
+                return true
+            }
+        }
+        return false
+    }
     
     func append(set:Set<A>) -> Set<A> {
         var current = self.array
@@ -52,6 +68,24 @@ struct Set<A: Hashable> : Sequence {
         return Set(array: current)
     }
     
+    func filter(f:(A -> Bool)) -> Set<A> {
+        var array = Array<A>()
+        for x in self {
+            if f(x) {
+                array += x
+            }
+        }
+        return Set(array: array)
+    }
+    
+    func map<B>(f:(A -> B)) -> Set<B> {
+        var array:Array<B> = Array()
+        for x in self {
+            array += f(x)
+        }
+        
+        return Set<B>(array: array)
+    }
     
     func generate() -> SetGenerator<A>  {
         let items = self.array
@@ -81,7 +115,6 @@ func !=<A: Equatable, B: Equatable>(lhs:Set<A>, rhs:Set<B>) -> Bool {
 
 let set = Set(array: [1,2,3,4,5,5,4,4,5,5])
 let otherSet = Set(items: 6,7,8,9,10,10,1000,5600)
-set.array
 
 set.any()
 set.contains(5)
@@ -92,3 +125,10 @@ for x in set {
 
 let newSet = set.append(otherSet)
 newSet.array
+
+let transform = newSet.filter{$0 > 5}.map{$0 + 1}
+transform.array
+
+set.member(3)
+
+set.interectsSet(Set(items: 7,8,4))
