@@ -84,6 +84,7 @@ let otherSet = Set(items: 6,7,8,9,10,10,1000,5600)
 set.array
 
 set.any()
+set.contains(5)
 
 for x in set {
     x
