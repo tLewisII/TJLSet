@@ -15,6 +15,12 @@ struct Set<A: Hashable> : Sequence {
     }
     }
     
+    var count:Int {
+    get {
+        return bucket.count
+    }
+    }
+    
     init(items:A...) {
         self.init(array:items)
     }
@@ -39,15 +45,13 @@ struct Set<A: Hashable> : Sequence {
         }
     }
     
-    func count() -> Int {
-        return bucket.count
-    }
     
     func append(set:Set<A>) -> Set<A> {
         var current = self.array
         current += set.array
         return Set(array: current)
     }
+    
     
     func generate() -> SetGenerator<A>  {
         let items = self.array
