@@ -62,7 +62,7 @@ struct Set<A: Hashable> : Sequence {
         return false
     }
     
-    func append(set:Set<A>) -> Set<A> {
+    func union(set:Set<A>) -> Set<A> {
         var current = self.array
         current += set.array
         return Set(array: current)
@@ -123,7 +123,7 @@ for x in set {
     x
 }
 
-let newSet = set.append(otherSet)
+let newSet = set.union(otherSet)
 newSet.array
 
 let transform = newSet.filter{$0 > 5}.map{$0 + 1}

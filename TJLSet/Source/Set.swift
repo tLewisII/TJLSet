@@ -68,7 +68,7 @@ struct Set<A: Hashable> : Sequence {
         return false
     }
     
-    func append(set:Set<A>) -> Set<A> {
+    func union(set:Set<A>) -> Set<A> {
         var current = self.array
         current += set.array
         return Set(array: current)

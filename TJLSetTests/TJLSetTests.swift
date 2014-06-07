@@ -54,11 +54,11 @@ class TJLSetTests: XCTestCase {
         }
     }
     
-    func testAppend() {
+    func testUnion() {
         let set = Set(array: [1,2,3,4,5,5,4,4,5,5])
         let otherSet = Set(items: 6,7,8,9,10,10,1000,5600)
         
-        let newSet = set.append(otherSet)
+        let newSet = set.union(otherSet)
         XCTAssert(newSet == Set(items: 1000, 5600, 6,7,8,9,10,1,2,3,4,5), "Should be equal")
         
     }
