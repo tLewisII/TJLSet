@@ -29,7 +29,7 @@ for item in set {
   someFunc(item)
 }
 ```
-append
+union
 
 ```
 let set = Set(array:[1,2,3,4,5,5,4,4,3,3])

@@ -22,7 +22,9 @@ struct Set<A: Hashable> : Sequence {
     }
     
     init(items:A...) {
-        self.init(array:items)
+        for obj in items {
+            bucket[obj] = true
+        }
     }
     
     init(array:Array<A>) {
