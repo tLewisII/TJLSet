@@ -55,7 +55,7 @@ struct Set<A: Hashable> : Sequence {
     
     func member(item:A) -> A? {
         if self.contains(item) {
-            return Optional.Some(item)
+            return .Some(item)
         } else {
             return nil
         }
@@ -68,6 +68,26 @@ struct Set<A: Hashable> : Sequence {
             }
         }
         return false
+    }
+    
+    func intersect(set:Set<A>) -> Set<A> {
+        var array:A[] = Array()
+        for x in self {
+            if let memb = set.member(x) {
+                array += memb
+            }
+        }
+        return Set(array:array)
+    }
+    
+    func minus(set:Set<A>) -> Set<A> {
+        var array:A[] = Array()
+        for x in self {
+            if !set.contains(x) {
+                array += x
+            }
+        }
+        return Set(array:array)
     }
     
     func union(set:Set<A>) -> Set<A> {
@@ -113,6 +133,17 @@ struct SetGenerator<A> : Generator {
     var items:Slice<A>
     
 }
+
+extension Set : Printable,DebugPrintable {
+    var description:String {
+    return "\(self.array)"
+    }
+    
+    var debugDescription:String {
+    return "\(self.array)"
+    }
+}
+
 func ==<A: Equatable, B: Equatable>(lhs:Set<A>, rhs:Set<B>) -> Bool {
     return lhs.bucket == rhs.bucket
 }

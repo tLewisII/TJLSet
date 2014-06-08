@@ -49,7 +49,7 @@ struct Set<A: Hashable> : Sequence {
     
     func member(item:A) -> A? {
         if self.contains(item) {
-            return Optional.Some(item)
+            return .Some(item)
         } else {
             return nil
         }
@@ -62,6 +62,26 @@ struct Set<A: Hashable> : Sequence {
             }
         }
         return false
+    }
+    
+    func intersect(set:Set<A>) -> Set<A> {
+        var array:A[] = Array()
+        for x in self {
+            if let memb = set.member(x) {
+                array += memb
+            }
+        }
+        return Set(array:array)
+    }
+    
+    func minus(set:Set<A>) -> Set<A> {
+        var array:A[] = Array()
+        for x in self {
+            if !set.contains(x) {
+                array += x
+            }
+        }
+        return Set(array:array)
     }
     
     func union(set:Set<A>) -> Set<A> {
@@ -107,6 +127,17 @@ struct SetGenerator<A> : Generator {
     var items:Slice<A>
     
 }
+
+extension Set : Printable,DebugPrintable {
+    var description:String {
+    return "\(self.array)"
+    }
+    
+    var debugDescription:String {
+    return "\(self.array)"
+    }
+}
+
 func ==<A: Equatable, B: Equatable>(lhs:Set<A>, rhs:Set<B>) -> Bool {
     return lhs.bucket == rhs.bucket
 }
@@ -115,7 +146,7 @@ func !=<A: Equatable, B: Equatable>(lhs:Set<A>, rhs:Set<B>) -> Bool {
     return lhs.bucket != rhs.bucket
 }
 
-let set = Set(array: [1,2,3,4,5,5,4,4,5,5])
+let set = Set(array:[1,2,3,4,5,5,4,4,5,5])
 let otherSet = Set(items: 6,7,8,9,10,10,1000,5600)
 
 set.any()
@@ -128,9 +159,14 @@ for x in set {
 let newSet = set.union(otherSet)
 newSet.array
 
+
 let transform = newSet.filter{$0 > 5}.map{$0 + 1}
 transform.array
 
 set.member(3)
 
 set.interectsSet(Set(items: 7,8,4))
+
+set.minus(Set(items:1,4,8,9))
+
+set.intersect(Set(items:1,4,8,9))

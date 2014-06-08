@@ -69,7 +69,7 @@ class TJLSetTests: XCTestCase {
         XCTAssert(newSet == Set(array: [4,5,6]), "Should be equal")
     }
     
-    func testIntersect() {
+    func testIntersectsSet() {
         let set = Set(array: [1,2,3,4,5,5,4,4,5,5])
         XCTAssert(set.interectsSet(Set(items: 9,0,5)), "Should be true")
     }
@@ -81,5 +81,19 @@ class TJLSetTests: XCTestCase {
         
         XCTAssert(known == Optional.Some(4), "Should be equal")
         XCTAssert(unknown == nil, "Should be nil")
+    }
+    
+    func testMinus() {
+        let set = Set(array: [1,2,3,4,5,5,4,4,5,5])
+        let minus = set.minus(Set(items: 8,9,0,3,5))
+        
+        XCTAssert(minus == Set(items: 1,2,4), "Should be equal")
+    }
+    
+    func testIntersect() {
+        let set = Set(array: [1,2,3,4,5,5,4,4,5,5])
+        let intersection = set.intersect(Set(items: 8,9,0,3,5))
+        
+        XCTAssert(intersection == Set(items: 3,5), "Should be equal")
     }
 }
