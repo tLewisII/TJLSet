@@ -2,23 +2,24 @@
 
 import Cocoa
 
+operator infix ∩ {}
+operator infix ∪ {}
+
 struct Set<A: Hashable> : Sequence {
     var bucket:Dictionary<A, Bool> = Dictionary()
     
     var array:Array<A> {
-    get {
-        var arr = Array<A>()
+    var arr = Array<A>()
         for (key, _) in bucket {
             arr += key
         }
         return arr
-    }
+        
     }
     
     var count:Int {
-    get {
-        return bucket.count
-    }
+    return bucket.count
+        
     }
     
     init(items:A...) {
@@ -90,6 +91,16 @@ struct Set<A: Hashable> : Sequence {
         return Set(array: current)
     }
     
+    func add(item:A) -> Set<A> {
+        if contains(item) {
+            return self
+        } else {
+            var arr = array
+            arr += item
+            return Set(array:arr)
+        }
+    }
+    
     func filter(f:(A -> Bool)) -> Set<A> {
         var array = Array<A>()
         for x in self {
@@ -146,6 +157,29 @@ func !=<A: Equatable, B: Equatable>(lhs:Set<A>, rhs:Set<B>) -> Bool {
     return lhs.bucket != rhs.bucket
 }
 
+func +=<A>(set:Set<A>, item:A) -> Set<A> {
+    if set.contains(item) {
+        return set
+    } else {
+        var arr = set.array
+        arr += item
+        return Set(array:arr)
+    }
+}
+
+func -<A>(lhs:Set<A>, rhs:Set<A>) -> Set<A> {
+    return lhs.minus(rhs)
+}
+
+func ∩<A>(lhs:Set<A>, rhs:Set<A>) -> Set<A> {
+    return lhs.intersect(rhs)
+}
+
+func ∪<A>(lhs:Set<A>, rhs:Set<A>) -> Set<A> {
+    return lhs.union(rhs)
+}
+
+
 let set = Set(array:[1,2,3,4,5,5,4,4,5,5])
 let otherSet = Set(items: 6,7,8,9,10,10,1000,5600)
 
@@ -167,6 +201,9 @@ set.member(3)
 
 set.interectsSet(Set(items: 7,8,4))
 
-set.minus(Set(items:1,4,8,9))
+set - Set(items:1,4,8,9)
 
-set.intersect(Set(items:1,4,8,9))
+set ∩ Set(items:1,4,8,9)
+set += 7
+
+set ∪ Set(items:5,6,7,8)
