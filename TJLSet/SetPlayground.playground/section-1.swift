@@ -203,7 +203,8 @@ set.interectsSet(Set(items: 7,8,4))
 
 set - Set(items:1,4,8,9)
 
-set ∩ Set(items:1,4,8,9)
+set ∩ Set(items:7,8,9,10,3)
+
 set += 7
 
 set ∪ Set(items:5,6,7,8)
