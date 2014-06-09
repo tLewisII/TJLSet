@@ -155,11 +155,11 @@ extension Set : Printable,DebugPrintable {
     }
 }
 
-func ==<A: Equatable, B: Equatable>(lhs:Set<A>, rhs:Set<B>) -> Bool {
+func ==<A: Equatable>(lhs:Set<A>, rhs:Set<A>) -> Bool {
     return lhs.bucket == rhs.bucket
 }
 
-func !=<A: Equatable, B: Equatable>(lhs:Set<A>, rhs:Set<B>) -> Bool {
+func !=<A: Equatable>(lhs:Set<A>, rhs:Set<A>) -> Bool {
     return lhs.bucket != rhs.bucket
 }
 

@@ -5,6 +5,9 @@ import Cocoa
 operator infix ∩ {}
 operator infix ∪ {}
 
+operator infix ∩ {}
+operator infix ∪ {}
+
 struct Set<A: Hashable> : Sequence {
     var bucket:Dictionary<A, Bool> = Dictionary()
     
@@ -149,11 +152,11 @@ extension Set : Printable,DebugPrintable {
     }
 }
 
-func ==<A: Equatable, B: Equatable>(lhs:Set<A>, rhs:Set<B>) -> Bool {
+func ==<A: Equatable>(lhs:Set<A>, rhs:Set<A>) -> Bool {
     return lhs.bucket == rhs.bucket
 }
 
-func !=<A: Equatable, B: Equatable>(lhs:Set<A>, rhs:Set<B>) -> Bool {
+func !=<A: Equatable>(lhs:Set<A>, rhs:Set<A>) -> Bool {
     return lhs.bucket != rhs.bucket
 }
 
@@ -178,6 +181,7 @@ func ∩<A>(lhs:Set<A>, rhs:Set<A>) -> Set<A> {
 func ∪<A>(lhs:Set<A>, rhs:Set<A>) -> Set<A> {
     return lhs.union(rhs)
 }
+
 
 
 let set = Set(array:[1,2,3,4,5,5,4,4,5,5])
