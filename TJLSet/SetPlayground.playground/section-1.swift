@@ -5,9 +5,6 @@ import Cocoa
 operator infix ∩ {}
 operator infix ∪ {}
 
-operator infix ∩ {}
-operator infix ∪ {}
-
 struct Set<A: Hashable> : Sequence {
     var bucket:Dictionary<A, Bool> = Dictionary()
     
