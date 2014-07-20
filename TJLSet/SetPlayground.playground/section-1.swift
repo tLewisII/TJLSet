@@ -66,7 +66,7 @@ struct Set<A: Hashable> : Sequence {
     }
     
     func intersect(set:Set<A>) -> Set<A> {
-        var array:A[] = Array()
+        var array:[A] = Array()
         for x in self {
             if let memb = set.member(x) {
                 array += memb
@@ -76,7 +76,7 @@ struct Set<A: Hashable> : Sequence {
     }
     
     func minus(set:Set<A>) -> Set<A> {
-        var array:A[] = Array()
+        var array:[A] = Array()
         for x in self {
             if !set.contains(x) {
                 array += x
@@ -122,7 +122,7 @@ struct Set<A: Hashable> : Sequence {
     
     func generate() -> SetGenerator<A>  {
         let items = self.array
-        return SetGenerator(items: items[0..items.count])
+        return SetGenerator(items: items[0..<items.count])
     }
 }
 
@@ -131,7 +131,7 @@ struct SetGenerator<A> : Generator {
     mutating func next() -> A?  {
         if items.isEmpty { return nil }
         let ret = items[0]
-        items = items[1..items.count]
+        items = items[1..<items.count]
         return ret
     }
     
